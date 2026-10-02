@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: yogi-game
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
