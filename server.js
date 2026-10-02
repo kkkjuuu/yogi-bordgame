@@ -1,6 +1,11 @@
 const express = require("express"), http = require("http"), { Server } = require("socket.io");
 const fs = require("fs"), path = require("path");
 const app = express(), srv = http.createServer(app), io = new Server(srv);
+
+// Share room via URL
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "public", "index.html"));
+});
 app.use(express.static("public"));
 
 const cardDir = path.join(__dirname, "public", "cardaction");
@@ -33,17 +38,36 @@ const EXTRA_ACTIONS = [
 ];
 
 const ALL_ACTIONS = [...new Set([...IMAGE_CARDS, ...EXTRA_ACTIONS])];
-const card = () => ALL_ACTIONS[Math.floor(Math.random() * ALL_ACTIONS.length)];
+
+// Prevent duplicate cards
+const getAvailableCards = (p) => {
+  const pPoses = p.poses || [];
+  const available = ALL_ACTIONS.filter(c => !pPoses.includes(c));
+  return available.length > 0 ? available : ALL_ACTIONS;
+};
+
+const card = (p) => {
+  const available = p ? getAvailableCards(p) : ALL_ACTIONS;
+  return available[Math.floor(Math.random() * available.length)];
+};
+
 const rooms = {};
 const newCode = () => { let c; do c = Array.from({ length: 4 }, () => "ABCDEFGHJKMNPQRSTUVWXYZ"[Math.random() * 23 | 0]).join(""); while (rooms[c]); return c; };
 app.get("/api/image-cards", (req, res) => res.json(IMAGE_CARDS));
 console.log(`Loaded ${IMAGE_CARDS.length} image cards, ${EXTRA_ACTIONS.length} text cards = ${ALL_ACTIONS.length} total`);
+
+function addLog(r, msg) {
+  r.log = r.log || [];
+  r.log.push(msg);
+  if (r.log.length > 20) r.log.shift();
+}
 
 function push(r) {
   r.players.forEach(p => p.sock && io.to(p.sock).emit("state", {
     code: r.code, phase: r.phase, turn: r.turn, timer: r.timer,
     msg: r.msg, pile: r.pile, host: r.players[0]?.id,
     opts: r.opts, votes: r.votes, voted: r.voted,
+    log: r.log || [], summary: r.summary,
     players: r.players.map(q => ({ 
       id: q.id, name: q.name, on: !!q.sock || q.isBot, 
       ready: q.ready, isBot: q.isBot, alive: q.alive, poses: q.poses || []
@@ -76,12 +100,21 @@ function advance(r) {
 function eliminate(r, idx, reason) {
   const p = r.players[idx];
   p.alive = false;
+  addLog(r, `${p.name} ตกรอบ! (${reason})`);
   let aliveCount = getAlive(r).length;
   if (aliveCount <= 1) {
     r.phase = 'over';
     const winner = getAlive(r)[0];
     r.msg = winner ? `🎉 ${winner.name} เป็นผู้ชนะ! 🎉` : "เสมอ! ไม่มีผู้รอดชีวิต";
     r.players.forEach(q => q.ready = false);
+    
+    // Post-game summary
+    r.summary = r.players.map(q => ({
+      name: q.name,
+      posesCount: (q.poses || []).length,
+      isWinner: winner ? q.id === winner.id : false,
+      isAlive: q.alive
+    }));
   } else {
     r.phase = 'transition';
     r.msg = `${p.name} ตกรอบ! (${reason})`;
@@ -99,6 +132,7 @@ function resolveVote(r) {
   } else {
     p.poses = p.poses || [];
     p.poses.push(r.pile);
+    addLog(r, `${p.name} ทำท่าผ่าน!`);
     r.msg = `${p.name} ทำท่าผ่าน! ✅ (ต้องทำค้างไว้ ${p.poses.length} ท่า)`;
     push(r);
     setTimeout(() => advance(r), 3000);
@@ -106,9 +140,10 @@ function resolveVote(r) {
 }
 
 function drawCard(r, p) {
-  r.pile = card();
+  r.pile = card(p);
   r.timer = r.opts.turnTime || 30; // Use selected time or default to 30
   r.msg = `${p.name} จั่วได้: ${r.pile}`;
+  addLog(r, `${p.name} จั่วได้ ${r.pile}`);
   push(r);
   
   if (p.isBot) {
@@ -140,7 +175,7 @@ io.on("connection", s => {
     let r = create ? (rooms[code = newCode()] = { 
         code, players: [], phase: 'lobby', turn: 0, pile: null, 
         msg: "รอผู้เล่น", opts: opts || { maxPlayers: 6, turnTime: 30 }, 
-        timer: 0, votes: {pass:0, fail:0}, voted: [] 
+        timer: 0, votes: {pass:0, fail:0}, voted: [], log: [], chat: [] 
     }) : rooms[String(code || "").toUpperCase()];
     if (!r) return ack({ error: "ไม่พบห้องนี้" });
     let p = r.players.find(x => x.id === uid);
@@ -151,6 +186,38 @@ io.on("connection", s => {
     }
     p.name = String(name).trim().slice(0, 14); p.sock = s.id;
     s.data = { room: r.code, uid }; s.join(r.code); ack({ code: r.code }); push(r);
+  });
+
+  // Kick player or remove bot
+  s.on("kick", targetId => {
+    const m = my(); if (!m) return; const { r, p } = m;
+    if (r.phase !== 'lobby' || r.players[0] !== p) return;
+    const targetIndex = r.players.findIndex(x => x.id === targetId);
+    if (targetIndex === -1) return;
+    const target = r.players[targetIndex];
+    if (target === p) return; // Cannot kick oneself
+    
+    if (target.sock) {
+      const targetSock = io.sockets.sockets.get(target.sock);
+      if (targetSock) {
+        targetSock.emit("alert", "คุณถูกเตะออกจากห้อง");
+        targetSock.leave(r.code);
+        targetSock.data = {};
+      }
+    }
+    r.players.splice(targetIndex, 1);
+    push(r);
+  });
+
+  // Chat system
+  s.on("chat", msg => {
+    const m = my(); if (!m) return; const { r, p } = m;
+    const chatMsg = { sender: p.name, msg: String(msg).trim().slice(0, 100) };
+    if (!chatMsg.msg) return;
+    r.chat = r.chat || [];
+    r.chat.push(chatMsg);
+    if (r.chat.length > 30) r.chat.shift();
+    io.to(r.code).emit("chat_msg", chatMsg);
   });
 
   s.on("ready", state => {
@@ -181,6 +248,8 @@ io.on("connection", s => {
     r.players.forEach(q => { q.poses = []; q.alive = true; });
     r.phase = 'countdown';
     r.timer = 5;
+    r.log = []; // clear log on new game
+    r.summary = null;
     push(r);
   });
 
@@ -255,6 +324,7 @@ setInterval(() => {
          r.turn = Math.floor(Math.random() * r.players.length);
          r.pile = null;
          r.msg = `เริ่มเกมแล้ว! ตาของ ${r.players[r.turn].name}`;
+         addLog(r, `เริ่มเกม!`);
          if (r.players[r.turn].isBot) {
            setTimeout(() => { if(r.phase==='playing'&&!r.pile) drawCard(r, r.players[r.turn]); }, 1500);
          }

@@ -11,245 +11,125 @@
   --green:#34d399;--red:#f87171;--blue:#60a5fa;--purple:#a78bfa;
   --glass:rgba(255,255,255,.06);--glass2:rgba(255,255,255,.1);
   --border:rgba(255,255,255,.08);--border2:rgba(255,255,255,.15);
-  --shadow:0 8px 32px rgba(0,0,0,.4);
-  --radius:16px;
+  --shadow:0 8px 32px rgba(0,0,0,.4);--radius:16px;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow:hidden}
-body{
-  background:var(--bg);
-  background-image:radial-gradient(ellipse at 20% 50%, rgba(99,102,241,.08) 0%, transparent 50%),
-                    radial-gradient(ellipse at 80% 20%, rgba(251,191,36,.06) 0%, transparent 50%),
-                    radial-gradient(ellipse at 50% 80%, rgba(52,211,153,.05) 0%, transparent 50%);
-  color:var(--ink);font:400 16px/1.5 "IBM Plex Sans Thai",system-ui,sans-serif;
-}
+body{background:var(--bg);background-image:radial-gradient(ellipse at 20% 50%,rgba(99,102,241,.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(251,191,36,.06) 0%,transparent 50%),radial-gradient(ellipse at 50% 80%,rgba(52,211,153,.05) 0%,transparent 50%);color:var(--ink);font:400 16px/1.5 "IBM Plex Sans Thai",system-ui,sans-serif}
 button,input,select{font:inherit;color:inherit}
 :focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 ::selection{background:rgba(251,191,36,.3)}
-
-/* ---- Utilities ---- */
 .screen{display:none;height:100%;max-width:960px;margin:0 auto;padding:16px 20px}
 .screen.on{display:flex;flex-direction:column}
-.glass{background:var(--glass);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid var(--border);border-radius:var(--radius)}
-.glass2{background:var(--glass2);backdrop-filter:blur(12px);border:1px solid var(--border2);border-radius:var(--radius)}
-
-/* ---- Home ---- */
 #home{justify-content:center;align-items:center;text-align:center;gap:32px}
-.logo{font:800 64px/1 "Outfit",sans-serif;letter-spacing:-.02em;background:linear-gradient(135deg,#fbbf24,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-shadow:none;filter:drop-shadow(0 4px 12px rgba(251,191,36,.3))}
-.sub{color:var(--mute);font-size:15px;margin-top:-20px;font-weight:300;letter-spacing:.02em}
+.logo{font:800 64px/1 "Outfit",sans-serif;letter-spacing:-.02em;background:linear-gradient(135deg,#fbbf24,#f59e0b,#fbbf24);-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 4px 12px rgba(251,191,36,.3))}
+.sub{color:var(--mute);font-size:15px;margin-top:-20px;font-weight:300}
 .panel{width:min(380px,100%);display:flex;flex-direction:column;gap:12px}
-.field{position:relative}
-.field input{
-  background:var(--surface);border:1px solid var(--border2);border-radius:12px;
-  padding:14px 16px;width:100%;font-size:16px;transition:border-color .2s,box-shadow .2s;
-}
+.field input{background:var(--surface);border:1px solid var(--border2);border-radius:12px;padding:14px 16px;width:100%;font-size:16px;transition:border-color .2s,box-shadow .2s}
 .field input:focus{border-color:var(--gold);box-shadow:0 0 0 3px rgba(251,191,36,.15)}
 .field input::placeholder{color:var(--mute)}
-.btn{
-  display:flex;align-items:center;justify-content:center;gap:8px;
-  border:0;border-radius:12px;padding:14px 20px;font-weight:600;cursor:pointer;
-  font-size:16px;transition:all .2s;position:relative;overflow:hidden;
-}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:14px 20px;font-weight:600;cursor:pointer;font-size:16px;transition:all .2s;position:relative;overflow:hidden}
 .btn::after{content:'';position:absolute;inset:0;background:linear-gradient(rgba(255,255,255,.1),transparent);pointer-events:none}
 .btn:active{transform:scale(.97)}
 .btn.primary{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#1a1a2e;box-shadow:0 4px 16px rgba(251,191,36,.3)}
 .btn.primary:hover{box-shadow:0 6px 24px rgba(251,191,36,.4);transform:translateY(-1px)}
 .btn.secondary{background:var(--surface);color:var(--ink);border:1px solid var(--border2)}
-.btn.secondary:hover{background:var(--surface2);border-color:rgba(255,255,255,.2)}
+.btn.secondary:hover{background:var(--surface2)}
 .btn.success{background:linear-gradient(135deg,#34d399,#10b981);color:#064e3b;box-shadow:0 4px 16px rgba(52,211,153,.3)}
 .btn.danger{background:linear-gradient(135deg,#f87171,#ef4444);color:#fff;box-shadow:0 4px 16px rgba(248,113,113,.3)}
+.btn:disabled{opacity:.5;cursor:not-allowed;transform:none!important}
 .row{display:flex;gap:8px}
 .row input{text-transform:uppercase;letter-spacing:.25em;text-align:center;font-weight:600}
 .me-note{color:var(--mute);font-size:13px;min-height:20px;font-weight:300}
-
-/* ---- Settings / Rooms Panels ---- */
-.modal-panel{
-  text-align:left;padding:24px;border-radius:20px;
-  background:linear-gradient(145deg,rgba(31,41,55,.95),rgba(17,24,39,.95));
-  backdrop-filter:blur(20px);border:1px solid var(--border2);
-  box-shadow:var(--shadow);
-}
-.modal-panel h3{
-  margin-bottom:20px;text-align:center;font-family:"Outfit",sans-serif;
-  font-weight:700;font-size:20px;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-.modal-panel label{display:block;margin-bottom:6px;font-size:13px;color:var(--mute);font-weight:500;letter-spacing:.03em}
-.modal-panel select{
-  width:100%;padding:12px 14px;margin-bottom:18px;
-  background:var(--surface);color:var(--ink);
-  border:1px solid var(--border2);border-radius:10px;
-  transition:border-color .2s;appearance:auto;
-}
-.modal-panel select:focus{border-color:var(--gold)}
-.room-item{
-  display:flex;justify-content:space-between;padding:14px 16px;
-  background:var(--surface);border-radius:12px;margin-bottom:8px;
-  align-items:center;border:1px solid var(--border);transition:border-color .2s;
-}
+.modal-panel{text-align:left;padding:24px;border-radius:20px;background:linear-gradient(145deg,rgba(31,41,55,.95),rgba(17,24,39,.95));backdrop-filter:blur(20px);border:1px solid var(--border2);box-shadow:var(--shadow)}
+.modal-panel h3{margin-bottom:20px;text-align:center;font-family:"Outfit",sans-serif;font-weight:700;font-size:20px;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.modal-panel label{display:block;margin-bottom:6px;font-size:13px;color:var(--mute);font-weight:500}
+.modal-panel select{width:100%;padding:12px 14px;margin-bottom:18px;background:var(--surface);color:var(--ink);border:1px solid var(--border2);border-radius:10px;appearance:auto}
+.room-item{display:flex;justify-content:space-between;padding:14px 16px;background:var(--surface);border-radius:12px;margin-bottom:8px;align-items:center;border:1px solid var(--border);transition:border-color .2s}
 .room-item:hover{border-color:var(--gold)}
-
-/* ---- Game Screen ---- */
 .top{display:flex;justify-content:space-between;align-items:center;gap:8px}
-.chip{
-  display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:13px;color:var(--mute);
-  background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:999px;
-}
+.chip{display:flex;align-items:center;gap:8px;padding:8px 16px;font-size:13px;color:var(--mute);background:var(--glass);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:999px;cursor:pointer;transition:border-color .2s}
+.chip:hover{border-color:var(--gold)}
 .chip b{color:var(--gold);letter-spacing:.2em;font-size:15px}
-.icon-btn{
-  background:var(--glass);border:1px solid var(--border);border-radius:12px;
-  width:42px;height:42px;display:grid;place-items:center;cursor:pointer;
-  font-size:18px;transition:all .2s;color:var(--mute);
-}
-.icon-btn:hover{background:var(--glass2);color:var(--ink);border-color:var(--border2)}
-.banner{
-  margin:12px 0 6px;padding:14px 20px;border-radius:16px;
-  background:linear-gradient(135deg,var(--glass),var(--glass2));
-  backdrop-filter:blur(16px);border:1px solid var(--border);
-  z-index:10;
-}
+.icon-btn{background:var(--glass);border:1px solid var(--border);border-radius:12px;width:42px;height:42px;display:grid;place-items:center;cursor:pointer;font-size:18px;transition:all .2s;color:var(--mute)}
+.icon-btn:hover{background:var(--glass2);color:var(--ink)}
+.banner{margin:12px 0 6px;padding:14px 20px;border-radius:16px;background:linear-gradient(135deg,var(--glass),var(--glass2));backdrop-filter:blur(16px);border:1px solid var(--border);z-index:10}
 .banner small{color:var(--mute);display:block;font-size:13px;font-weight:300}
 .banner strong{font-size:18px;font-weight:600;display:block;margin-top:2px}
 .banner strong em{color:var(--gold);font-style:normal;font-weight:700}
-
-/* ---- Table ---- */
 .stage{flex:1;position:relative;min-height:0}
-.table{
-  position:absolute;inset:4% 6%;border-radius:50%;
-  background:radial-gradient(circle at 50% 40%,rgba(31,41,55,.9),rgba(17,24,39,.95));
-  border:3px solid rgba(255,255,255,.06);
-  box-shadow:inset 0 0 60px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.5),
-             inset 0 0 100px rgba(99,102,241,.03);
-}
+.table{position:absolute;inset:4% 6%;border-radius:50%;background:radial-gradient(circle at 50% 40%,rgba(31,41,55,.9),rgba(17,24,39,.95));border:3px solid rgba(255,255,255,.06);box-shadow:inset 0 0 60px rgba(0,0,0,.3),0 12px 40px rgba(0,0,0,.5)}
 .center{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);display:flex;gap:16px;align-items:center;z-index:5}
-
-/* ---- Seats ---- */
-.seat{
-  position:absolute;transform:translate(-50%,-50%);
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  font-size:12px;width:90px;text-align:center;z-index:2;
-}
-.av{
-  width:54px;height:54px;border-radius:16px;display:grid;place-items:center;
-  font-weight:700;font-size:20px;color:#fff;position:relative;
-  box-shadow:0 4px 12px rgba(0,0,0,.3);transition:all .3s;
-}
-.seat.act .av{
-  box-shadow:0 0 0 3px var(--gold),0 0 24px 6px rgba(251,191,36,.4);
-  animation:glow 2s ease-in-out infinite;
-}
+.seat{position:absolute;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;width:90px;text-align:center;z-index:2}
+.av{width:54px;height:54px;border-radius:16px;display:grid;place-items:center;font-weight:700;font-size:20px;color:#fff;position:relative;box-shadow:0 4px 12px rgba(0,0,0,.3);transition:all .3s}
+.seat.act .av{box-shadow:0 0 0 3px var(--gold),0 0 24px 6px rgba(251,191,36,.4);animation:glow 2s ease-in-out infinite}
 @keyframes glow{50%{box-shadow:0 0 0 3px var(--gold),0 0 36px 10px rgba(251,191,36,.5)}}
-.seat span.n{
-  max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
-  font-weight:500;font-size:12px;
-}
-
-/* ---- Cards ---- */
-.card{
-  border-radius:14px;position:relative;flex:none;
-  box-shadow:0 6px 20px rgba(0,0,0,.5);overflow:hidden;
-  transition:transform .2s;
-}
-.back{
-  background:linear-gradient(145deg,#1e3a5f,#0f2744) var(--back,none) center/cover;
-  border:2px solid rgba(255,255,255,.15);
-}
+.seat span.n{max-width:90px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-weight:500;font-size:12px}
+.card{border-radius:14px;position:relative;flex:none;box-shadow:0 6px 20px rgba(0,0,0,.5);overflow:hidden;transition:transform .2s}
+.back{background:linear-gradient(145deg,#1e3a5f,#0f2744) var(--back,none) center/cover;border:2px solid rgba(255,255,255,.15)}
 .back::after{content:"";position:absolute;inset:8px;border:1px solid rgba(255,255,255,.1);border-radius:8px}
-.face{background:#f8f6f0;color:#1a1a2e;display:flex;flex-direction:column;align-items:center;justify-content:center;border:0;cursor:pointer}
 .deck{cursor:pointer;border:0;padding:0;transition:transform .15s,box-shadow .15s}
 .deck:hover{transform:scale(1.04);box-shadow:0 8px 28px rgba(0,0,0,.6)}
 .deck:active{transform:scale(.96)}
-
-/* ---- Actions Bar ---- */
-.actions-bar{
-  display:flex;justify-content:center;gap:10px;margin:10px auto;
-  z-index:10;width:100%;max-width:420px;
-}
+.actions-bar{display:flex;justify-content:center;gap:10px;margin:10px auto;z-index:10;width:100%;max-width:420px}
 .hint{text-align:center;color:var(--mute);font-size:13px;padding-bottom:4px;font-weight:300}
-
-/* ---- Countdown Overlay ---- */
-.countdown-num{
-  font:800 80px/1 "Outfit",sans-serif;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  filter:drop-shadow(0 6px 20px rgba(251,191,36,.5));
-  animation:countPulse 1s ease-in-out infinite;
-  position:absolute;z-index:30;
-}
+.countdown-num{font:800 80px/1 "Outfit",sans-serif;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 6px 20px rgba(251,191,36,.5));animation:countPulse 1s ease-in-out infinite;position:absolute;z-index:30}
 @keyframes countPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
-
-/* ---- Timer ---- */
-.timer-badge{
-  position:absolute;z-index:25;top:-30px;left:50%;transform:translateX(-50%);
-  font:700 28px/1 "Outfit",sans-serif;padding:6px 16px;border-radius:12px;
-  background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border:1px solid var(--border);
-}
+.timer-badge{position:absolute;z-index:25;top:-30px;left:50%;transform:translateX(-50%);font:700 28px/1 "Outfit",sans-serif;padding:6px 16px;border-radius:12px;background:rgba(0,0,0,.7);backdrop-filter:blur(8px);border:1px solid var(--border)}
 .timer-badge.warn{color:var(--red);border-color:rgba(248,113,113,.3);animation:timerWarn .5s ease-in-out infinite}
 @keyframes timerWarn{50%{opacity:.6}}
-
-/* ---- Game Over Overlay ---- */
-.game-over{
-  position:absolute;z-index:50;
-  background:linear-gradient(145deg,rgba(17,24,39,.97),rgba(10,14,26,.97));
-  backdrop-filter:blur(24px);
-  padding:36px 44px;border-radius:28px;
-  border:2px solid var(--gold);
-  box-shadow:0 0 60px rgba(251,191,36,.15),var(--shadow);
-  text-align:center;display:flex;flex-direction:column;gap:16px;min-width:300px;
-}
-.game-over h2{
-  font:800 40px/1 "Outfit",sans-serif;
-  background:linear-gradient(135deg,var(--gold),var(--gold2));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-}
-
-/* ---- Zoom Modal ---- */
-.zoom-overlay{
-  display:none;position:fixed;inset:0;z-index:999;
-  background:rgba(0,0,0,.85);backdrop-filter:blur(8px);
-  place-items:center;flex-direction:column;justify-content:center;gap:20px;cursor:zoom-out;
-}
+/* Progress bar */
+.timer-bar{position:absolute;bottom:-8px;left:0;height:4px;border-radius:2px;transition:width 1s linear;z-index:26}
+.game-over{position:absolute;z-index:50;background:linear-gradient(145deg,rgba(17,24,39,.97),rgba(10,14,26,.97));backdrop-filter:blur(24px);padding:36px 44px;border-radius:28px;border:2px solid var(--gold);box-shadow:0 0 60px rgba(251,191,36,.15),var(--shadow);text-align:center;display:flex;flex-direction:column;gap:16px;min-width:300px}
+.game-over h2{font:800 40px/1 "Outfit",sans-serif;background:linear-gradient(135deg,var(--gold),var(--gold2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.zoom-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);place-items:center;flex-direction:column;justify-content:center;gap:20px;cursor:zoom-out}
 .zoom-overlay img{max-width:85%;max-height:70vh;border-radius:20px;box-shadow:0 20px 60px rgba(0,0,0,.6);border:3px solid var(--border2)}
-.zoom-overlay h2{font-family:"Outfit",sans-serif;color:var(--gold);font-weight:700;font-size:24px;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.zoom-overlay h2{font-family:"Outfit",sans-serif;color:var(--gold);font-weight:700;font-size:24px}
 .zoom-overlay p{color:var(--mute);font-size:13px}
-
-/* ---- Pose Cards ---- */
-.pose-strip{
-  display:flex;gap:5px;justify-content:center;flex-wrap:wrap;
-  position:absolute;top:100%;margin-top:8px;left:50%;transform:translateX(-50%);
-  pointer-events:auto;z-index:20;
-}
-.pose-card{
-  border-radius:6px;border:2px solid rgba(251,191,36,.5);
-  cursor:zoom-in;object-fit:cover;background:#f8f6f0;
-  box-shadow:0 3px 8px rgba(0,0,0,.4);transition:transform .15s,border-color .15s;
-}
+.pose-strip{display:flex;gap:5px;justify-content:center;flex-wrap:wrap;position:absolute;top:100%;margin-top:8px;left:50%;transform:translateX(-50%);pointer-events:auto;z-index:20}
+.pose-card{border-radius:6px;border:2px solid rgba(251,191,36,.5);cursor:zoom-in;object-fit:cover;background:#f8f6f0;box-shadow:0 3px 8px rgba(0,0,0,.4);transition:transform .15s,border-color .15s}
 .pose-card:hover{transform:scale(1.15);border-color:var(--gold);z-index:30}
-
-/* ---- Status Badges ---- */
-.status-badge{
-  font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px;
-  letter-spacing:.02em;
-}
+.status-badge{font-size:10px;font-weight:600;padding:2px 8px;border-radius:6px}
 .status-ready{background:rgba(52,211,153,.2);color:var(--green);border:1px solid rgba(52,211,153,.3)}
 .status-wait{background:rgba(248,113,113,.15);color:var(--red);border:1px solid rgba(248,113,113,.2)}
-.dead-x{
-  position:absolute;inset:0;display:grid;place-items:center;
-  font-size:30px;border-radius:16px;
-  background:rgba(0,0,0,.5);backdrop-filter:blur(2px);
-}
+.dead-x{position:absolute;inset:0;display:grid;place-items:center;font-size:30px;border-radius:16px;background:rgba(0,0,0,.5);backdrop-filter:blur(2px)}
+/* Card flip */
+.card-flip{perspective:600px;width:120px;height:170px}
+.card-flip-inner{position:relative;width:100%;height:100%;transition:transform .6s;transform-style:preserve-3d}
+.card-flip.flipped .card-flip-inner{transform:rotateY(180deg)}
+.card-flip-front,.card-flip-back{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:14px;overflow:hidden}
+.card-flip-back{transform:rotateY(180deg)}
+/* Chat */
+.chat-toggle{position:fixed;bottom:70px;right:16px;width:48px;height:48px;border-radius:50%;background:var(--surface);border:1px solid var(--border2);display:grid;place-items:center;cursor:pointer;z-index:80;font-size:22px;box-shadow:0 4px 16px rgba(0,0,0,.4);transition:all .2s}
+.chat-toggle:hover{background:var(--surface2);transform:scale(1.05)}
+.chat-badge{position:absolute;top:-4px;right:-4px;background:var(--red);color:#fff;font-size:10px;font-weight:700;min-width:18px;height:18px;border-radius:9px;display:grid;place-items:center;padding:0 4px}
+.chat-panel{display:none;position:fixed;bottom:130px;right:16px;width:300px;max-height:320px;background:rgba(17,24,39,.96);backdrop-filter:blur(20px);border:1px solid var(--border2);border-radius:20px;z-index:80;box-shadow:var(--shadow);overflow:hidden;flex-direction:column}
+.chat-panel.open{display:flex}
+.chat-msgs{flex:1;overflow-y:auto;padding:12px 16px;display:flex;flex-direction:column;gap:6px;max-height:230px}
+.chat-msg{font-size:13px;line-height:1.4}
+.chat-msg b{color:var(--gold);font-weight:600;margin-right:4px}
+.chat-input-row{display:flex;gap:6px;padding:10px 12px;border-top:1px solid var(--border)}
+.chat-input-row input{flex:1;padding:8px 12px;background:var(--surface);border:1px solid var(--border);border-radius:8px;font-size:14px}
+.chat-input-row button{padding:8px 14px;background:var(--gold);color:#1a1a2e;border:0;border-radius:8px;font-weight:600;cursor:pointer}
+/* Game Log */
+.log-strip{display:flex;gap:6px;overflow-x:auto;padding:4px 0;scrollbar-width:none}
+.log-strip::-webkit-scrollbar{display:none}
+.log-item{flex:none;font-size:11px;color:var(--mute);background:var(--glass);padding:4px 10px;border-radius:8px;white-space:nowrap;border:1px solid var(--border)}
+/* Confetti */
+.confetti-piece{position:fixed;width:10px;height:10px;z-index:200;pointer-events:none;animation:confettiFall linear forwards}
+@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(100vh) rotate(720deg)}}
+/* Vibrate pulse on your turn */
+@keyframes yourTurn{0%,100%{transform:scale(1)}50%{transform:scale(1.02)}}
+.my-turn-pulse{animation:yourTurn .6s ease-in-out 2}
 </style></head><body>
 
-<!-- ===== HOME ===== -->
 <section id="home" class="screen on">
   <h1 class="logo">Yogi</h1>
   <p class="sub">เกมการ์ดทำท่าสุดป่วน 🤸</p>
-  
   <div class="panel" id="main-panel">
     <div class="field"><input id="name" maxlength="14" placeholder="ชื่อของคุณ" autocomplete="off"></div>
     <button class="btn primary" id="show-create">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
-      สร้างห้อง
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>สร้างห้อง
     </button>
     <button class="btn secondary" id="find-room">🔍 หาห้องเล่น</button>
     <div class="row">
@@ -258,287 +138,287 @@ button,input,select{font:inherit;color:inherit}
     </div>
     <p class="me-note" id="note"></p>
   </div>
-  
-  <!-- Settings Panel -->
   <div class="panel modal-panel" id="settings-panel" style="display:none;">
     <h3>⚙️ ตั้งค่าห้อง</h3>
     <label>จำนวนผู้เล่นสูงสุด</label>
-    <select id="opt-players">
-      <option value="4">4 คน</option>
-      <option value="6" selected>6 คน</option>
-      <option value="8">8 คน</option>
-      <option value="10">10 คน</option>
-    </select>
+    <select id="opt-players"><option value="4">4 คน</option><option value="6" selected>6 คน</option><option value="8">8 คน</option><option value="10">10 คน</option></select>
     <label>เวลาทำท่า (วินาที)</label>
-    <select id="opt-time">
-      <option value="0">ไม่จับเวลา (ชิลๆ)</option>
-      <option value="15">15 วินาที</option>
-      <option value="30" selected>30 วินาที</option>
-      <option value="60">60 วินาที</option>
-    </select>
-    <div class="row" style="margin-top:8px">
-      <button class="btn secondary" id="cancel-create" style="flex:1;">ยกเลิก</button>
-      <button class="btn primary" id="confirm-create" style="flex:1.5;">สร้างและเข้าเล่น</button>
-    </div>
+    <select id="opt-time"><option value="0">ไม่จับเวลา (ชิลๆ)</option><option value="15">15 วินาที</option><option value="30" selected>30 วินาที</option><option value="60">60 วินาที</option></select>
+    <div class="row" style="margin-top:8px"><button class="btn secondary" id="cancel-create" style="flex:1;">ยกเลิก</button><button class="btn primary" id="confirm-create" style="flex:1.5;">สร้างและเข้าเล่น</button></div>
   </div>
-
-  <!-- Rooms Browser Panel -->
   <div class="panel modal-panel" id="rooms-panel" style="display:none;">
     <h3>🔍 ห้องที่กำลังรอผู้เล่น</h3>
-    <div id="rooms-list" style="max-height:220px; overflow-y:auto; margin-bottom:16px;"></div>
+    <div id="rooms-list" style="max-height:220px;overflow-y:auto;margin-bottom:16px;"></div>
     <button class="btn secondary" id="cancel-find">กลับ</button>
   </div>
 </section>
 
-<!-- ===== GAME ===== -->
 <section id="game" class="screen">
   <div class="top">
-    <button class="icon-btn" id="leave" aria-label="ออกจากห้อง">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <div class="chip">ห้อง <b id="room">ABCD</b></div>
-    <div style="width:42px"></div>
+    <button class="icon-btn" id="leave"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 18l-6-6 6-6"/></svg></button>
+    <div class="chip" id="copy-room" title="คลิกเพื่อคัดลอกรหัสห้อง">ห้อง <b id="room">ABCD</b> 📋</div>
+    <button class="icon-btn" id="share-btn" title="แชร์ห้อง">🔗</button>
   </div>
   <div class="banner"><strong id="turn"></strong><small id="what"></small></div>
+  <div id="game-log" class="log-strip" style="display:none"></div>
   <div class="stage"><div class="table"></div><div class="center" id="center"></div><div id="seats"></div></div>
   <div class="actions-bar" id="actions"></div>
   <p class="hint" id="hint"></p>
 </section>
 
-<!-- ===== ZOOM MODAL ===== -->
-<div id="zoom-modal" class="zoom-overlay" onclick="this.style.display='none'">
-  <img id="zoom-img">
-  <h2 id="zoom-text"></h2>
-  <p>แตะเพื่อปิด</p>
+<div class="chat-toggle" id="chat-toggle" style="display:none">💬<span class="chat-badge" id="chat-badge" style="display:none">0</span></div>
+<div class="chat-panel" id="chat-panel">
+  <div style="padding:12px 16px;font-weight:600;border-bottom:1px solid var(--border);font-size:14px">💬 แชท</div>
+  <div class="chat-msgs" id="chat-msgs"></div>
+  <div class="chat-input-row"><input id="chat-input" placeholder="พิมพ์ข้อความ..." maxlength="100"><button id="chat-send">ส่ง</button></div>
 </div>
 
+<div id="zoom-modal" class="zoom-overlay" onclick="this.style.display='none'">
+  <img id="zoom-img"><h2 id="zoom-text"></h2><p>แตะเพื่อปิด</p>
+</div>
+
+<!-- Sound Effects (Web Audio) -->
 <script src="/socket.io/socket.io.js"></script>
 <script>
-const BACK_IMG = "/bgcard.png";
-let IMAGE_CARDS = [];
-fetch("/api/image-cards").then(r=>r.json()).then(list=>IMAGE_CARDS=list).catch(()=>{});
+// ===== AUDIO ENGINE =====
+const AudioCtx = window.AudioContext || window.webkitAudioContext;
+let audioCtx;
+function ensureAudio(){if(!audioCtx)audioCtx=new AudioCtx()}
+function playTone(freq,dur=.15,type='sine',vol=.12){
+  ensureAudio();try{
+  const o=audioCtx.createOscillator(),g=audioCtx.createGain();
+  o.type=type;o.frequency.value=freq;g.gain.value=vol;
+  o.connect(g);g.connect(audioCtx.destination);
+  o.start();g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+dur);
+  o.stop(audioCtx.currentTime+dur);
+  }catch(e){}
+}
+function sfxDraw(){playTone(600,.1);setTimeout(()=>playTone(800,.12),100)}
+function sfxCountdown(){playTone(440,.15,'square',.08)}
+function sfxStart(){playTone(523,.12);setTimeout(()=>playTone(659,.12),120);setTimeout(()=>playTone(784,.2),240)}
+function sfxVotePass(){playTone(523,.1);setTimeout(()=>playTone(659,.15),100)}
+function sfxVoteFail(){playTone(330,.2,'sawtooth',.08);setTimeout(()=>playTone(220,.3,'sawtooth',.06),200)}
+function sfxEliminate(){playTone(300,.15,'sawtooth',.1);setTimeout(()=>playTone(200,.3,'sawtooth',.08),150)}
+function sfxWin(){[523,659,784,1047].forEach((f,i)=>setTimeout(()=>playTone(f,.2,'sine',.1),i*120))}
+function sfxYourTurn(){playTone(880,.08);setTimeout(()=>playTone(1100,.12),80)}
+function sfxTick(){playTone(1000,.03,'square',.04)}
+function vibrate(ms=100){try{navigator.vibrate&&navigator.vibrate(ms)}catch(e){}}
 
-const CARD_COLORS = ["#e9b44c","#34d399","#f87171","#60a5fa","#a78bfa","#fb923c","#f472b6","#38bdf8","#c084fc","#4ade80"];
-function cardColor(k) { let h=0; for(let i=0;i<k.length;i++) h=k.charCodeAt(i)+((h<<5)-h); return CARD_COLORS[Math.abs(h)%CARD_COLORS.length]; }
-const CARD_ICONS = ["🤚","🖐️","👆","✌️","🤞","👊","🤙","👋","🤟","💪","🫲","🫳","🫴","👃","👅","👁️","🦶","🙈","😜","🤸"];
-function cardIcon(k) { let h=0; for(let i=0;i<k.length;i++) h=k.charCodeAt(i)+((h<<5)-h); return CARD_ICONS[Math.abs(h)%CARD_ICONS.length]; }
-
-function hasImage(k) { return IMAGE_CARDS.includes(k); }
-
-function faceCard(k, tag="div") {
-  if (hasImage(k)) {
-    return `<${tag} class="card face" style="border:2px solid rgba(251,191,36,.4); width:120px; height:170px;"><img src="/cardaction/${k}.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px;" alt="${k}"></${tag}>`;
+// ===== CONFETTI =====
+function confetti(count=60){
+  const colors=['#fbbf24','#34d399','#f87171','#60a5fa','#a78bfa','#fb923c','#f472b6'];
+  for(let i=0;i<count;i++){
+    const el=document.createElement('div');el.className='confetti-piece';
+    el.style.cssText=`left:${Math.random()*100}vw;top:-10px;background:${colors[i%colors.length]};border-radius:${Math.random()>.5?'50%':'2px'};width:${6+Math.random()*8}px;height:${6+Math.random()*8}px;animation-duration:${2+Math.random()*2}s;animation-delay:${Math.random()*.5}s;`;
+    document.body.appendChild(el);
+    setTimeout(()=>el.remove(),5000);
   }
-  const col = cardColor(k);
-  const icon = cardIcon(k);
-  return `<${tag} class="card face" style="width:120px; height:170px; border:2px solid ${col}; background:linear-gradient(160deg,#1a1a2e,#16213e); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:8px; padding:12px; text-align:center;">
-    <div style="font-size:40px; filter:drop-shadow(0 2px 6px rgba(0,0,0,.4));">${icon}</div>
-    <div style="font-size:12px; font-weight:600; color:${col}; line-height:1.3; word-break:keep-all;">${k}</div>
-  </${tag}>`;
 }
 
-function poseThumb(k, size, isMe) {
-  const w = isMe ? size : size;
-  const h = isMe ? Math.round(size*1.4) : Math.round(size*1.4);
-  if (hasImage(k)) {
-    return `<img class="pose-card" src="/cardaction/${k}.png" onclick="event.stopPropagation();openZoom('${k}')" style="width:${w}px;height:${h}px;" title="${k}">`;
-  }
-  const col = cardColor(k);
-  const icon = cardIcon(k);
-  return `<div class="pose-card" onclick="event.stopPropagation();openZoom('${k}')" style="width:${w}px;height:${h}px;display:grid;place-items:center;background:linear-gradient(160deg,#1a1a2e,#16213e);border-color:${col};cursor:zoom-in;" title="${k}">
-    <span style="font-size:${isMe?18:12}px">${icon}</span>
-  </div>`;
+// ===== CARD HELPERS =====
+const BACK_IMG="/bgcard.png";
+let IMAGE_CARDS=[];
+fetch("/api/image-cards").then(r=>r.json()).then(l=>IMAGE_CARDS=l).catch(()=>{});
+const CARD_COLORS=["#e9b44c","#34d399","#f87171","#60a5fa","#a78bfa","#fb923c","#f472b6","#38bdf8","#c084fc","#4ade80"];
+function cardColor(k){let h=0;for(let i=0;i<k.length;i++)h=k.charCodeAt(i)+((h<<5)-h);return CARD_COLORS[Math.abs(h)%CARD_COLORS.length]}
+const CARD_ICONS=["🤚","🖐️","👆","✌️","🤞","👊","🤙","👋","🤟","💪","🫲","🫳","🫴","👃","👅","👁️","🦶","🙈","😜","🤸"];
+function cardIcon(k){let h=0;for(let i=0;i<k.length;i++)h=k.charCodeAt(i)+((h<<5)-h);return CARD_ICONS[Math.abs(h)%CARD_ICONS.length]}
+function hasImage(k){return IMAGE_CARDS.includes(k)}
+
+function faceCardHTML(k){
+  if(hasImage(k)) return `<img src="/cardaction/${k}.png" style="width:100%;height:100%;object-fit:cover;border-radius:12px;">`;
+  return `<div style="width:100%;height:100%;border-radius:12px;background:linear-gradient(160deg,#1a1a2e,#16213e);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:12px;text-align:center"><div style="font-size:40px">${cardIcon(k)}</div><div style="font-size:12px;font-weight:600;color:${cardColor(k)};line-height:1.3">${k}</div></div>`;
+}
+function poseThumb(k,size,isMe){
+  const w=size,h=Math.round(size*1.4);
+  if(hasImage(k)) return `<img class="pose-card" src="/cardaction/${k}.png" onclick="event.stopPropagation();openZoom('${k}')" style="width:${w}px;height:${h}px;" title="${k}">`;
+  const col=cardColor(k);
+  return `<div class="pose-card" onclick="event.stopPropagation();openZoom('${k}')" style="width:${w}px;height:${h}px;display:grid;place-items:center;background:linear-gradient(160deg,#1a1a2e,#16213e);border-color:${col};cursor:zoom-in" title="${k}"><span style="font-size:${isMe?18:12}px">${cardIcon(k)}</span></div>`;
 }
 
-const $ = id => document.getElementById(id);
-if(BACK_IMG) document.documentElement.style.setProperty("--back",`url(${BACK_IMG})`);
+const $=id=>document.getElementById(id);
+if(BACK_IMG)document.documentElement.style.setProperty("--back",`url(${BACK_IMG})`);
 
-window.openZoom = (k) => {
-  const img = $('zoom-img');
-  if (hasImage(k)) {
-    img.src = `/cardaction/${k}.png`;
-    img.style.display = 'block';
-  } else {
-    img.src = '';
-    img.style.display = 'none';
-  }
-  $('zoom-text').textContent = k;
-  $('zoom-text').style.fontSize = hasImage(k) ? '24px' : '42px';
-  $('zoom-modal').style.display = 'flex';
+window.openZoom=(k)=>{
+  const img=$('zoom-img');
+  if(hasImage(k)){img.src=`/cardaction/${k}.png`;img.style.display='block';}
+  else{img.src='';img.style.display='none';}
+  $('zoom-text').textContent=k;
+  $('zoom-text').style.fontSize=hasImage(k)?'24px':'42px';
+  $('zoom-modal').style.display='flex';
 };
 
-const get = k => { try { return localStorage.getItem(k) } catch(e) { return null } };
-const store = (k,v) => { try { v==null ? localStorage.removeItem(k) : localStorage.setItem(k,v) } catch(e) {} };
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const COL = [
-  "linear-gradient(135deg,#fbbf24,#f59e0b)",
-  "linear-gradient(135deg,#34d399,#10b981)",
-  "linear-gradient(135deg,#f87171,#ef4444)",
-  "linear-gradient(135deg,#60a5fa,#3b82f6)",
-  "linear-gradient(135deg,#a78bfa,#8b5cf6)",
-  "linear-gradient(135deg,#fb923c,#f97316)",
-  "linear-gradient(135deg,#f472b6,#ec4899)",
-  "linear-gradient(135deg,#38bdf8,#0ea5e9)",
-];
-let me = {}, S = null;
-try { me = JSON.parse(get("yogi_user") || "{}") } catch(e) {}
-if(me.name) { $("name").value = me.name; $("note").textContent = "ยินดีต้อนรับกลับ, " + me.name + " 👋" }
-const show = id => document.querySelectorAll(".screen").forEach(s => s.classList.toggle("on", s.id === id));
-const socket = io();
+// ===== STATE =====
+const get=k=>{try{return localStorage.getItem(k)}catch(e){return null}};
+const store=(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch(e){}};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const COL=["linear-gradient(135deg,#fbbf24,#f59e0b)","linear-gradient(135deg,#34d399,#10b981)","linear-gradient(135deg,#f87171,#ef4444)","linear-gradient(135deg,#60a5fa,#3b82f6)","linear-gradient(135deg,#a78bfa,#8b5cf6)","linear-gradient(135deg,#fb923c,#f97316)","linear-gradient(135deg,#f472b6,#ec4899)","linear-gradient(135deg,#38bdf8,#0ea5e9)"];
+let me={},S=null,prevPhase=null,prevPile=null,chatOpen=false,unreadChat=0;
+try{me=JSON.parse(get("yogi_user")||"{}")}catch(e){}
+if(me.name){$("name").value=me.name;$("note").textContent="ยินดีต้อนรับกลับ, "+me.name+" 👋"}
+const show=id=>document.querySelectorAll(".screen").forEach(s=>s.classList.toggle("on",s.id===id));
+const socket=io();
 
-function go(create, c, quiet, opts={}) {
-  const n = $("name").value.trim();
-  if(!n) { $("note").textContent = "กรุณาใส่ชื่อก่อน"; $("name").focus(); return }
-  me = { name:n, id: me.id || (crypto.randomUUID ? crypto.randomUUID() : Date.now()+""+Math.random()) };
-  store("yogi_user", JSON.stringify(me));
-  socket.emit("join", {create, code:c, uid:me.id, name:n, opts}, r => {
-    if(r.error) { if(!quiet) $("note").textContent = r.error; store("yogi_room", null); return }
-    store("yogi_room", r.code); show("game");
+// Auto-join from URL
+const urlRoom=new URLSearchParams(location.search).get('room');
+if(urlRoom)$("code").value=urlRoom;
+
+function go(create,c,quiet,opts={}){
+  const n=$("name").value.trim();
+  if(!n){$("note").textContent="กรุณาใส่ชื่อก่อน";$("name").focus();return}
+  me={name:n,id:me.id||(crypto.randomUUID?crypto.randomUUID():Date.now()+""+Math.random())};
+  store("yogi_user",JSON.stringify(me));
+  socket.emit("join",{create,code:c,uid:me.id,name:n,opts},r=>{
+    if(r.error){if(!quiet)$("note").textContent=r.error;store("yogi_room",null);return}
+    store("yogi_room",r.code);show("game");$("chat-toggle").style.display="grid";
   });
 }
 
-$("show-create").onclick = () => {
-  const n = $("name").value.trim();
-  if(!n) { $("note").textContent = "กรุณาใส่ชื่อก่อน"; $("name").focus(); return }
-  $("main-panel").style.display = "none";
-  $("settings-panel").style.display = "flex";
+$("show-create").onclick=()=>{const n=$("name").value.trim();if(!n){$("note").textContent="กรุณาใส่ชื่อก่อน";$("name").focus();return}$("main-panel").style.display="none";$("settings-panel").style.display="flex"};
+$("cancel-create").onclick=()=>{$("settings-panel").style.display="none";$("main-panel").style.display="flex"};
+$("confirm-create").onclick=()=>go(true,null,false,{maxPlayers:parseInt($("opt-players").value),turnTime:parseInt($("opt-time").value)});
+$("find-room").onclick=()=>{
+  const n=$("name").value.trim();if(!n){$("note").textContent="กรุณาใส่ชื่อก่อน";$("name").focus();return}
+  $("main-panel").style.display="none";$("rooms-panel").style.display="flex";
+  $("rooms-list").innerHTML="<p style='color:var(--mute);text-align:center;padding:20px'>กำลังค้นหา...</p>";
+  socket.emit("list_rooms",list=>{
+    if(!list.length)$("rooms-list").innerHTML="<p style='color:var(--mute);text-align:center;padding:20px'>ไม่มีห้องที่รอผู้เล่นในขณะนี้</p>";
+    else $("rooms-list").innerHTML=list.map(r=>`<div class="room-item"><div><strong style="color:var(--ink)">ห้อง ${r.code}</strong><br><small style="color:var(--mute)">ผู้เล่น ${r.players}/${r.max}</small></div><button class="btn primary" style="padding:8px 16px;font-size:14px;" onclick="go(false,'${r.code}')">เข้าร่วม</button></div>`).join("");
+  });
 };
-$("cancel-create").onclick = () => { $("settings-panel").style.display = "none"; $("main-panel").style.display = "flex"; };
-$("confirm-create").onclick = () => {
-  go(true, null, false, { maxPlayers: parseInt($("opt-players").value), turnTime: parseInt($("opt-time").value) });
-};
+$("cancel-find").onclick=()=>{$("rooms-panel").style.display="none";$("main-panel").style.display="flex"};
+$("join").onclick=()=>{const c=$("code").value.trim().toUpperCase();if(c.length<4){$("note").textContent="ใส่รหัสห้อง 4 ตัวอักษร";return}go(false,c)};
+$("leave").onclick=()=>{socket.emit("leave");store("yogi_room",null);S=null;show("home");$("chat-toggle").style.display="none";$("chat-panel").classList.remove("open")};
 
-$("find-room").onclick = () => {
-  const n = $("name").value.trim();
-  if(!n) { $("note").textContent = "กรุณาใส่ชื่อก่อน"; $("name").focus(); return }
-  $("main-panel").style.display = "none";
-  $("rooms-panel").style.display = "flex";
-  $("rooms-list").innerHTML = "<p style='color:var(--mute);text-align:center;padding:20px'>กำลังค้นหา...</p>";
-  socket.emit("list_rooms", list => {
-    if(list.length === 0) {
-      $("rooms-list").innerHTML = "<p style='color:var(--mute);text-align:center;padding:20px'>ไม่มีห้องที่รอผู้เล่นในขณะนี้</p>";
-    } else {
-      $("rooms-list").innerHTML = list.map(r => `
-        <div class="room-item">
-          <div><strong style="color:var(--ink)">ห้อง ${r.code}</strong><br><small style="color:var(--mute)">ผู้เล่น ${r.players}/${r.max}</small></div>
-          <button class="btn primary" style="padding:8px 16px;font-size:14px;" onclick="go(false,'${r.code}')">เข้าร่วม</button>
-        </div>
-      `).join("");
+// Copy room code
+$("copy-room").onclick=()=>{if(!S)return;const url=location.origin+"?room="+S.code;navigator.clipboard.writeText(url).then(()=>{$("copy-room").querySelector("b").textContent="คัดลอกแล้ว!";setTimeout(()=>{if(S)$("copy-room").querySelector("b").textContent=S.code},1500)}).catch(()=>{navigator.clipboard.writeText(S.code)})};
+$("share-btn").onclick=()=>{if(!S)return;const url=location.origin+"?room="+S.code;if(navigator.share)navigator.share({title:"มาเล่น Yogi กัน!",text:`เข้าห้อง ${S.code} มาเล่นเกมทำท่ากัน!`,url}).catch(()=>{});else{navigator.clipboard.writeText(url);alert("คัดลอกลิงก์ห้องแล้ว: "+url)}};
+
+// Chat
+$("chat-toggle").onclick=()=>{chatOpen=!chatOpen;$("chat-panel").classList.toggle("open",chatOpen);if(chatOpen){unreadChat=0;$("chat-badge").style.display="none";$("chat-input").focus()}};
+$("chat-send").onclick=sendChat;
+$("chat-input").onkeydown=e=>{if(e.key==="Enter")sendChat()};
+function sendChat(){const v=$("chat-input").value.trim();if(!v)return;socket.emit("chat",v);$("chat-input").value=""}
+socket.on("chat_msg",msg=>{
+  const el=document.createElement("div");el.className="chat-msg";el.innerHTML=`<b>${esc(msg.name)}</b>${esc(msg.text)}`;
+  $("chat-msgs").appendChild(el);$("chat-msgs").scrollTop=9999;
+  if(!chatOpen){unreadChat++;$("chat-badge").textContent=unreadChat;$("chat-badge").style.display="grid"}
+});
+
+socket.on("connect",()=>{const c=get("yogi_room");if(c&&me.id)go(false,c,true)});
+socket.on("state",s=>{
+  const oldPhase=S?S.phase:null;const oldPile=S?S.pile:null;const oldTimer=S?S.timer:null;
+  S=s;
+  // SFX triggers
+  if(oldPhase!==s.phase){
+    if(s.phase==='playing'&&oldPhase==='countdown')sfxStart();
+    if(s.phase==='over'){sfxWin();confetti();vibrate(300)}
+  }
+  if(s.phase==='countdown'&&s.timer!==oldTimer)sfxCountdown();
+  if(s.pile&&!oldPile)sfxDraw();
+  if(s.phase==='playing'&&s.pile&&s.opts.turnTime>0&&s.timer<=5&&s.timer>0)sfxTick();
+  // Vibrate on your turn
+  const ps=s.players;
+  if(s.phase==='playing'&&!s.pile&&ps[s.turn]&&ps[s.turn].id===me.id&&oldPhase!=='countdown'){sfxYourTurn();vibrate(200)}
+  render();
+});
+socket.on("alert",m=>alert(m));
+
+function render(){
+  if(!S)return;
+  const ps=S.players,n=ps.length,i0=Math.max(0,ps.findIndex(p=>p.id===me.id));
+  const mine=S.phase==='playing'&&ps[S.turn]&&ps[S.turn].id===me.id;
+  const myP=ps.find(p=>p.id===me.id);
+  $("room").textContent=S.code;
+
+  // Game log
+  if(S.log&&S.log.length){$("game-log").style.display="flex";$("game-log").innerHTML=S.log.slice(-8).map(l=>`<div class="log-item">${esc(l)}</div>`).join("");$("game-log").scrollLeft=9999}
+  else $("game-log").style.display="none";
+
+  // Seats
+  $("seats").innerHTML=ps.map((p,j)=>{
+    const o=(j-i0+n)%n,a=(90+o*360/n)*Math.PI/180;
+    const dist=n>6?48:43,x=50+dist*Math.cos(a),y=50+dist*Math.sin(a);
+    const isAct=(S.phase==='playing'||S.phase==='voting')&&j===S.turn;
+    const isMe=p.id===me.id;const styleOp=p.alive?(p.on?1:.5):.4;
+    let posesHTML='';
+    if(p.poses&&p.poses.length>0&&S.phase!=='lobby'){
+      posesHTML=`<div class="pose-strip" style="width:${isMe?'300px':'110px'}">${p.poses.map(c=>poseThumb(c,isMe?44:24,isMe)).join('')}</div>`;
     }
-  });
-};
-$("cancel-find").onclick = () => { $("rooms-panel").style.display = "none"; $("main-panel").style.display = "flex"; };
-
-$("join").onclick = () => { const c = $("code").value.trim().toUpperCase(); if(c.length<4) { $("note").textContent = "ใส่รหัสห้อง 4 ตัวอักษร"; return } go(false, c) };
-$("leave").onclick = () => { socket.emit("leave"); store("yogi_room", null); S = null; show("home") };
-
-socket.on("connect", () => { const c = get("yogi_room"); if(c && me.id) go(false, c, true) });
-socket.on("state", s => { S = s; render() });
-socket.on("alert", m => alert(m));
-
-function render() {
-  if(!S) return;
-  const ps = S.players, n = ps.length, i0 = Math.max(0, ps.findIndex(p => p.id === me.id));
-  const mine = S.phase === 'playing' && ps[S.turn] && ps[S.turn].id === me.id;
-  const myP = ps.find(p => p.id === me.id);
-  
-  $("room").textContent = S.code;
-  
-  // ---- Seats ----
-  $("seats").innerHTML = ps.map((p, j) => {
-    const o = (j - i0 + n) % n, a = (90 + o * 360 / n) * Math.PI / 180;
-    const dist = n > 6 ? 48 : 43;
-    const x = 50 + dist * Math.cos(a), y = 50 + dist * Math.sin(a);
-    const isAct = (S.phase === 'playing' || S.phase === 'voting') && j === S.turn;
-    const isMe = p.id === me.id;
-    const styleOp = p.alive ? (p.on ? 1 : 0.5) : 0.4;
+    const hostBadge=(S.host===p.id&&S.phase==='lobby')?`<span style="font-size:9px;color:var(--gold);font-weight:600">👑 โฮสต์</span>`:'';
+    const kickBtn=(S.host===me.id && !isMe && S.phase==='lobby')?`<button style="position:absolute;top:-8px;right:-8px;background:var(--red);color:#fff;border:0;border-radius:50%;width:24px;height:24px;cursor:pointer;font-size:12px;box-shadow:0 2px 4px rgba(0,0,0,.5);z-index:30" onclick="socket.emit('kick','${p.id}')">❌</button>`:'';
     
-    let posesHTML = '';
-    if (p.poses && p.poses.length > 0 && (S.phase !== 'lobby')) {
-      posesHTML = `<div class="pose-strip" style="width:${isMe ? '300px' : '110px'};">
-        ${p.poses.map(c => poseThumb(c, isMe ? 44 : 24, isMe)).join('')}
-      </div>`;
-    }
-
-    return `<div class="seat ${isAct ? "act" : ""}" style="left:${x}%;top:${y}%;opacity:${styleOp}; ${!p.alive ? 'filter:grayscale(1)' : ''}; z-index:${isMe ? 15 : 2};">
-      <div class="av" style="background:${COL[j % COL.length]};">
-        ${p.isBot ? '🤖' : esc([...p.name][0])}
-        ${!p.alive ? '<div class="dead-x">💀</div>' : ''}
-      </div>
-      <span class="n">${esc(p.name)}${isMe ? " (คุณ)" : ""}</span>
-      ${S.phase === 'lobby' ? `<span class="status-badge ${p.ready ? 'status-ready' : 'status-wait'}">${p.ready ? '✓ พร้อม' : '● รอ'}</span>` : ''}
+    return `<div class="seat ${isAct?"act":""}" style="left:${x}%;top:${y}%;opacity:${styleOp};${!p.alive?'filter:grayscale(1)':''};z-index:${isMe?15:2}">
+      ${kickBtn}
+      <div class="av" style="background:${COL[j%COL.length]}">${p.isBot?'🤖':esc([...p.name][0])}${!p.alive?'<div class="dead-x">💀</div>':''}</div>
+      <span class="n">${esc(p.name)}${isMe?" (คุณ)":""}</span>
+      ${hostBadge}
+      ${S.phase==='lobby'?`<span class="status-badge ${p.ready?'status-ready':'status-wait'}">${p.ready?'✓ พร้อม':'● รอ'}</span>`:''}
       ${posesHTML}
     </div>`;
   }).join("");
-  
-  // ---- Center ----
-  const myPile = S.pile ? `<div style="text-align:center; cursor:zoom-in; position:relative;" onclick="openZoom('${S.pile}')">
-    ${faceCard(S.pile, "div")}
-    <div style="font-weight:600; margin-top:8px; font-size:14px; background:rgba(0,0,0,.6); backdrop-filter:blur(8px); padding:6px 12px; border-radius:10px; border:1px solid var(--border); line-height:1.2;">${S.pile}</div>
-  </div>` : `<div class="card" style="width:120px; height:170px; border:2px dashed var(--border2); box-shadow:none; background:transparent;"></div>`;
 
-  let timerHTML = '';
-  if (S.phase === 'playing' && S.pile && S.opts.turnTime > 0) {
-    timerHTML = `<div class="timer-badge ${S.timer <= 5 ? 'warn' : ''}" style="color:${S.timer <= 5 ? 'var(--red)' : 'var(--gold)'};">${S.timer}s</div>`;
-  } else if (S.phase === 'voting') {
-    timerHTML = `<div class="timer-badge" style="color:var(--purple);">${S.timer}s</div>`;
+  // Center
+  const pileHTML=S.pile?`<div style="text-align:center;cursor:zoom-in;position:relative" onclick="openZoom('${S.pile}')">
+    <div class="card-flip ${S.pile?'flipped':''}"><div class="card-flip-inner">
+      <div class="card-flip-front card back" style="width:120px;height:170px"></div>
+      <div class="card-flip-back" style="width:120px;height:170px;border-radius:14px;overflow:hidden;border:2px solid ${hasImage(S.pile)?'rgba(251,191,36,.4)':cardColor(S.pile)}">${faceCardHTML(S.pile)}</div>
+    </div></div>
+    <div style="font-weight:600;margin-top:8px;font-size:14px;background:rgba(0,0,0,.6);backdrop-filter:blur(8px);padding:6px 12px;border-radius:10px;border:1px solid var(--border);line-height:1.2">${S.pile}</div>
+  </div>`:`<div class="card" style="width:120px;height:170px;border:2px dashed var(--border2);box-shadow:none;background:transparent"></div>`;
+
+  let timerHTML='';
+  const maxTime=S.opts.turnTime||30;
+  if(S.phase==='playing'&&S.pile&&S.opts.turnTime>0){
+    const pct=Math.max(0,(S.timer/maxTime)*100);
+    timerHTML=`<div class="timer-badge ${S.timer<=5?'warn':''}" style="color:${S.timer<=5?'var(--red)':'var(--gold)'}">${S.timer}s</div><div class="timer-bar" style="width:${pct}%;background:${S.timer<=5?'var(--red)':'var(--gold)'}"></div>`;
+  }else if(S.phase==='voting'){
+    const pct=Math.max(0,(S.timer/15)*100);
+    timerHTML=`<div class="timer-badge" style="color:var(--purple)">${S.timer}s</div><div class="timer-bar" style="width:${pct}%;background:var(--purple)"></div>`;
   }
 
-  const gameOverHTML = S.phase === 'over' ? `
-    <div class="game-over">
-      <h2>🏆 จบเกม!</h2>
-      <div style="font-size:20px; color:var(--ink); font-weight:600;">${S.msg}</div>
-      <div style="margin-top:8px;">
-        ${ps.filter(p => !p.alive).map(p => `<div style="color:var(--red);font-size:14px;margin:4px 0;">💀 ${esc(p.name)} — ตกรอบ (${(p.poses||[]).length} ท่า)</div>`).join('')}
-        ${ps.filter(p => p.alive).map(p => `<div style="color:var(--green);font-size:16px;font-weight:700;margin:4px 0;">🏆 ${esc(p.name)} — ผู้ชนะ! (${(p.poses||[]).length} ท่า)</div>`).join('')}
-      </div>
-    </div>
-  ` : '';
+  const gameOverHTML=S.phase==='over'?`<div class="game-over"><h2>🏆 จบเกม!</h2><div style="font-size:20px;color:var(--ink);font-weight:600">${S.msg}</div><div style="margin-top:8px">
+    ${(S.summary||ps).filter(p=>p.alive||p.isWinner).map(p=>`<div style="color:var(--green);font-size:16px;font-weight:700;margin:4px 0">🏆 ${esc(p.name)} — ผู้ชนะ! (${(p.poses||[]).length} ท่า)</div>`).join('')}
+    ${(S.summary||ps).filter(p=>!p.alive&&!p.isWinner).map(p=>`<div style="color:var(--red);font-size:14px;margin:4px 0">💀 ${esc(p.name)} — ตกรอบ (${(p.poses||[]).length} ท่า)</div>`).join('')}
+  </div></div>`:'';
 
-  $("center").innerHTML = `
-    <button class="card back deck" id="deck" aria-label="จั่วการ์ด" style="width:120px; height:170px; display:${(S.phase !== 'lobby' && S.phase !== 'over' && S.phase !== 'countdown') ? 'block' : 'none'}"></button>
-    ${S.phase === 'countdown' ? `<div class="countdown-num">${S.timer}</div>` : ''}
-    ${(S.phase !== 'lobby' && S.phase !== 'countdown' && S.phase !== 'over') ? `<div style="position:relative">${timerHTML}${myPile}</div>` : ''}
+  $("center").innerHTML=`
+    <button class="card back deck" id="deck" style="width:120px;height:170px;display:${(S.phase!=='lobby'&&S.phase!=='over'&&S.phase!=='countdown')?'block':'none'}"></button>
+    ${S.phase==='countdown'?`<div class="countdown-num">${S.timer}</div>`:''}
+    ${(S.phase!=='lobby'&&S.phase!=='countdown'&&S.phase!=='over')?`<div style="position:relative">${timerHTML}${pileHTML}</div>`:''}
     ${gameOverHTML}
   `;
-  
-  const deckEl = $("deck");
-  if(deckEl) deckEl.onclick = () => { if(mine && !S.pile) socket.emit("draw") };
-  
-  // ---- Banner ----
-  $("turn").innerHTML = S.phase === 'over' ? "จบเกม"
-    : S.phase === 'countdown' ? "เตรียมตัว..."
-    : S.phase === 'lobby' ? `ผู้เล่น <em>${n} / ${S.opts.maxPlayers}</em> คน`
-    : S.phase === 'voting' ? `🗳️ โหวตให้ <em>${esc(ps[S.turn].name)}</em>`
-    : mine ? "ตาของ <em>คุณ</em>" : `ตาของ <em>${esc(ps[S.turn].name)}</em>`;
-  $("what").textContent = S.msg || "";
-  
-  // ---- Actions ----
-  let actHTML = "";
-  const canStart = S.host === me.id && S.phase === 'lobby' && n >= 2;
-  const allReady = ps.every(p => p.ready);
+  const deckEl=$("deck");if(deckEl)deckEl.onclick=()=>{if(mine&&!S.pile)socket.emit("draw")};
 
-  if (S.phase === 'lobby') {
-    if (myP.ready) actHTML += `<button class="btn secondary" onclick="socket.emit('ready',false)" style="flex:1;">ยกเลิกพร้อม</button>`;
-    else actHTML += `<button class="btn success" onclick="socket.emit('ready',true)" style="flex:1;">✓ พร้อม</button>`;
-    if (S.host === me.id && n < S.opts.maxPlayers) actHTML += `<button class="btn secondary" onclick="socket.emit('add_bot')" style="flex:1;">🤖 เพิ่มบอท</button>`;
-    if (canStart) actHTML += `<button class="btn primary" onclick="socket.emit('start')" style="flex:1;opacity:${allReady?1:.5}">▶ เริ่มเกม</button>`;
-  } else if (S.phase === 'playing' && mine && S.pile) {
-    actHTML += `<button class="btn success" onclick="socket.emit('action','done')" style="flex:1;">✅ ทำเสร็จแล้ว!</button>`;
-    actHTML += `<button class="btn danger" onclick="socket.emit('action','giveup')" style="flex:1;">🏳️ ยอมแพ้</button>`;
-  } else if (S.phase === 'voting' && !mine && myP.alive && !S.voted.includes(me.id)) {
-    actHTML += `<button class="btn success" onclick="socket.emit('vote',true)" style="flex:1;">👍 ผ่าน</button>`;
-    actHTML += `<button class="btn danger" onclick="socket.emit('vote',false)" style="flex:1;">👎 ไม่ผ่าน</button>`;
-  } else if (S.phase === 'over') {
-    if (myP.ready) actHTML += `<button class="btn secondary" style="flex:1;opacity:.7" disabled>⏳ รอคนอื่น...</button>`;
-    else actHTML += `<button class="btn primary" onclick="socket.emit('play_again')" style="flex:1;">🔄 เล่นอีกครั้ง</button>`;
+  // Banner
+  $("turn").innerHTML=S.phase==='over'?"จบเกม":S.phase==='countdown'?"เตรียมตัว...":S.phase==='lobby'?`ผู้เล่น <em>${n} / ${S.opts.maxPlayers}</em> คน`:S.phase==='voting'?`🗳️ โหวตให้ <em>${esc(ps[S.turn].name)}</em>`:mine?"ตาของ <em>คุณ</em>":`ตาของ <em>${esc(ps[S.turn].name)}</em>`;
+  $("what").textContent=S.msg||"";
+  if(mine&&!S.pile)document.querySelector('.banner')?.classList.add('my-turn-pulse');
+  else document.querySelector('.banner')?.classList.remove('my-turn-pulse');
+
+  // Actions
+  let a="";const canStart=S.host===me.id&&S.phase==='lobby'&&n>=2,allReady=ps.every(p=>p.ready);
+  if(S.phase==='lobby'){
+    if(myP.ready)a+=`<button class="btn secondary" onclick="socket.emit('ready',false)" style="flex:1">ยกเลิกพร้อม</button>`;
+    else a+=`<button class="btn success" onclick="socket.emit('ready',true)" style="flex:1">✓ พร้อม</button>`;
+    if(S.host===me.id&&n<S.opts.maxPlayers)a+=`<button class="btn secondary" onclick="socket.emit('add_bot')" style="flex:1">🤖 เพิ่มบอท</button>`;
+    if(canStart)a+=`<button class="btn primary" onclick="socket.emit('start')" style="flex:1;opacity:${allReady?1:.5}">▶ เริ่มเกม</button>`;
+  }else if(S.phase==='playing'&&mine&&S.pile){
+    a+=`<button class="btn success" onclick="socket.emit('action','done')" style="flex:1">✅ ทำเสร็จแล้ว!</button>`;
+    a+=`<button class="btn danger" onclick="socket.emit('action','giveup')" style="flex:1">🏳️ ยอมแพ้</button>`;
+  }else if(S.phase==='voting'&&!mine&&myP.alive&&!S.voted.includes(me.id)){
+    a+=`<button class="btn success" onclick="socket.emit('vote',true)" style="flex:1">👍 ผ่าน</button>`;
+    a+=`<button class="btn danger" onclick="socket.emit('vote',false)" style="flex:1">👎 ไม่ผ่าน</button>`;
+  }else if(S.phase==='over'){
+    if(myP.ready)a+=`<button class="btn secondary" style="flex:1;opacity:.7" disabled>⏳ รอคนอื่น...</button>`;
+    else a+=`<button class="btn primary" onclick="socket.emit('play_again')" style="flex:1">🔄 เล่นอีกครั้ง</button>`;
   }
-  $("actions").innerHTML = actHTML;
-  
-  // ---- Hint ----
-  $("hint").textContent = S.phase === 'countdown' ? ""
-    : S.phase === 'lobby' ? (S.host === me.id ? (n < 2 ? "รอเพื่อนเข้าร่วม (ต้องมีอย่างน้อย 2 คน)" : (!allReady ? "รอผู้เล่นทุกคนกดพร้อม" : "กดเริ่มเกมได้เลย!")) : "รอเจ้าของห้องกดเริ่มเกม")
-    : S.phase === 'voting' ? `ผ่าน ${S.votes.pass} / ไม่ผ่าน ${S.votes.fail}`
-    : (mine && !S.pile ? "แตะที่กองกลางเพื่อจั่วไพ่" : "");
+  $("actions").innerHTML=a;
+
+  // Hint
+  $("hint").textContent=S.phase==='countdown'?"":S.phase==='lobby'?(S.host===me.id?(n<2?"รอเพื่อนเข้าร่วม (ต้องมีอย่างน้อย 2 คน)":(!allReady?"รอผู้เล่นทุกคนกดพร้อม":"กดเริ่มเกมได้เลย!")):"รอเจ้าของห้องกดเริ่มเกม"):S.phase==='voting'?`ผ่าน ${S.votes.pass} / ไม่ผ่าน ${S.votes.fail}`:(mine&&!S.pile?"แตะที่กองกลางเพื่อจั่วไพ่":"");
 }
+
+// First interaction to enable audio
+document.addEventListener('click',()=>ensureAudio(),{once:true});
 </script></body></html>
